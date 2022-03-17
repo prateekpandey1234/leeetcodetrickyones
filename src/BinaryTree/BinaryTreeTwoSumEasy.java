@@ -34,4 +34,26 @@ public class BinaryTreeTwoSumEasy {
         return result;
 
     }
+    //alternative soln recursion
+    private boolean searchInBST(TreeNode root, int val) {
+        return root != null && ((root.val < val) ?
+                searchInBST(root.right, val) : root.val <= val || searchInBST(root.left, val));
+    }
+
+    private void inorder(TreeNode root, int target, TreeNode parentNode) {
+        if (root != null && !noNeedToSearchNow) {
+            inorder(root.left, target, parentNode);
+            if (root.val*2!=target && searchInBST(parentNode, target - root.val))
+                noNeedToSearchNow = true;
+            inorder(root.right, target, parentNode);
+        }
+    }
+
+    boolean noNeedToSearchNow;
+
+    public boolean findTarget1(TreeNode root, int target) {
+        noNeedToSearchNow = false;
+        inorder(root, target, root);
+        return noNeedToSearchNow;
+    }
 }
