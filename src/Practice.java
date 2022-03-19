@@ -17,22 +17,5 @@ class TreeNode {
 
 
 public class Practice {
-    public TreeNode searchBST(TreeNode root, int val) {
-        return returnSubtree(root,val);
-    }
 
-    public TreeNode returnSubtree(TreeNode root,int val){
-        if(root==null){
-            return null;
-        }
-        if(root.val==val){
-            return root ;
-        }
-        else if(root.val>val){
-            return returnSubtree(root.left,val);
-        }
-        else  {
-            return returnSubtree(root.right,val);
-        }
-    }
 }

@@ -15,6 +15,5 @@ public class HeightBalancedTreeEasy {
 
         return root;
 
-
     }
 }
