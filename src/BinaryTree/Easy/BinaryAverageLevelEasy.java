@@ -1,4 +1,11 @@
-package BinaryTree;
+package BinaryTree.Easy;
+
+
+
+
+
+
+
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,11 +1,14 @@
-package BinaryTree;
+package BinaryTree.Easy;
+
+
+
 
 public class BinaryMaxDepthEasy {
     public int maxDepth(TreeNode root) {
         int count = 1;
         return godeep(root,count)-1;
     }
-    public int godeep(TreeNode root,int count){
+    public int godeep(TreeNode root, int count){
         if(root==null){
             return count;
         }

@@ -1,4 +1,6 @@
-package BinaryTree;
+package BinaryTree.Easy;
+
+
 
 public class SymmetricBinaryTreeEasy {
     //recursive approach for checking if tree is symmetric

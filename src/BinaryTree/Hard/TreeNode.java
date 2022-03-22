@@ -1,4 +1,4 @@
-package BinaryTree;
+package BinaryTree.Hard;
 
 public class TreeNode {
 

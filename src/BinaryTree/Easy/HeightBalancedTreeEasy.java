@@ -1,4 +1,6 @@
-package BinaryTree;
+package BinaryTree.Easy;
+
+
 
 public class HeightBalancedTreeEasy {
     public TreeNode sortedArrayToBST(int[] nums) {

@@ -1,4 +1,8 @@
-package BinaryTree;
+package BinaryTree.Easy;
+
+
+
+
 
 import java.util.HashMap;
 
