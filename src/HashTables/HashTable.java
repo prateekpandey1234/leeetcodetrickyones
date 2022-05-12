@@ -3,11 +3,11 @@ package HashTables;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class HashMap<K,V> {
+public class HashTable<K,V> {
     private ArrayList<HashNode<K,V>> BucketArray;
     private int numbuckets;
     private int size;
-    public HashMap(int capacity){
+    public HashTable(int capacity){
         BucketArray = new ArrayList<>();
         this.numbuckets = capacity;
         size=0;
@@ -77,7 +77,7 @@ public class HashMap<K,V> {
             }
         }
     }
-    public V remove(K key)
+    public void remove(K key)
     {
         // Apply hash function to find index for given key
         int bucketIndex = getbucketindex(key);
@@ -99,7 +99,7 @@ public class HashMap<K,V> {
 
         // If key was not there
         if (head == null)
-            return null;
+            return;
 
         // Reduce size
         size--;
@@ -110,6 +110,5 @@ public class HashMap<K,V> {
         else
             BucketArray.set(bucketIndex, head.next);
 
-        return head.value;
     }
 }
