@@ -1,45 +1,24 @@
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 
 public class Practice {
-    private HashMap<Integer,Character>  sud;
-    private HashMap<Integer,Character>  sud2;
-    public boolean isValidSudoku(char[][] board) {
-        int i=0 , j=0;
-        while(i<=8){
-            sud = new HashMap<>();
+    private HashMap<Character, char[]> phonemap;
+    public void letterCombinations(String digits) {
+        int n = digits.length();
 
-            while(j<=8){
-                //Row
-                char val = board[i][j];
-                if(val!='.' && !sud.containsValue(val)){
-                    sud.put(Integer.parseInt(String.valueOf(val)),val);
-                }
-                else if(sud.containsValue(val)){
-                    return false;
-                }
-                //col
-                int k =0;
-                sud2 = new HashMap<>();
-                while(k<=8){
-                    char val2 = board[k][j];
-                    if(val2!='.' && !sud2.containsValue(val2)){
-                        sud2.put(Integer.parseInt(String.valueOf(val2 )),val2);
-                    }
-                    else if(sud2.containsValue(val2)){
-                        return false;
-                    }
-                    System.out.println(sud2);
-                    k++;
-                }
-                j++;
+        phonemap = new HashMap<>();
+        phonemap.put('2', new char[]{'a','b','c'});
+        phonemap.put('3', new char[]{'d','e','f'});
+        phonemap.put('4', new char[]{'g','h','i'});
+        phonemap.put('5', new char[]{'j','k','l'});
+        phonemap.put('6', new char[]{'m','n','o'});
+        phonemap.put('7', new char[]{'p','q','r','s'});
+        phonemap.put('8', new char[]{'t','u','v'});
+        phonemap.put('9', new char[]{'w','x','y','z'});
 
-            }
-            System.out.println(sud);
-            i++;
-        }
-        return true;
     }
 }
