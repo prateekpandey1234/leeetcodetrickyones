@@ -18,6 +18,7 @@ public class SudokuValid {
 
         public boolean isSafe(char[][] board,int row,int col, char num) {
             int cnt = 0;
+            //for checking along the row
             for(int i=0; i<board.length; i++) {
                 if(board[row][i] == num ) {
                     cnt++;
@@ -26,6 +27,7 @@ public class SudokuValid {
                 }
             }
             cnt = 0;
+            //for checking along the coloumn
             for( int i=0; i<board.length; i++) {
                 if(board[i][col] == num ) {
                     cnt++;
@@ -34,10 +36,10 @@ public class SudokuValid {
                 }
             }
             cnt = 0;
+            //for checking in the sub box
             int sqrt = (int)Math.sqrt(board.length);
             int boxrow = row - row%sqrt;
             int boxcol = col - col%sqrt;
-
             for(int i=boxrow; i < boxrow+sqrt; i++) {
                 for(int j=boxcol; j<boxcol+sqrt; j++) {
                     if(board[i][j] == num ) {
