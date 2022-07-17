@@ -1,27 +1,22 @@
 import java.lang.reflect.Array;
 import java.util.*;
+ class ListNode {
+      int val;
+      ListNode next;
+      ListNode() {}
+      ListNode(int val) { this.val = val; }
+      ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+  }
 
 public class Practice {
-    public int longestConsecutive(int[] nums) {
-        if(nums.length==0){
-            return 0;
-        }
-        Arrays.sort(nums);
-        int currcnt = 1;
-        int maxcnt = 0;
-        int j = 0;
-        System.out.print(Arrays.toString(nums));
-        while(j<nums.length){
-            if(nums[j+1]-nums[j]==1){
-                currcnt+=1;
-            }else {
-                if(currcnt>maxcnt){
-                    maxcnt=currcnt;
-                    currcnt=1;
-                }
-            }
-            j++;
-        }
-        return maxcnt;
+    public int peakIndexInMountainArray(int[] arr) {
+        int i=0,j=arr.length-1;
+        return DivAndSolve(arr,i,j,0);
+    }
+    public int DivAndSolve(int[] arr,int i,int j,int max){
+        int mid=(i+j)/2;
+        if(j-i<=2){return Math.max(Math.max(arr[i],arr[j]),arr[mid]);}
+        max=Math.max(DivAndSolve(arr,i,mid-1,max),DivAndSolve(arr,mid+1,j,max));
+        return Math.max(arr[mid],max);
     }
 }
