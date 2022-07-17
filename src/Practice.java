@@ -9,14 +9,30 @@ import java.util.*;
   }
 
 public class Practice {
-    public int peakIndexInMountainArray(int[] arr) {
-        int i=0,j=arr.length-1;
-        return DivAndSolve(arr,i,j,0);
+    public int[][] merge(int[][] intervals) {
+        ArrayList<int[]> ans1 = new ArrayList<>();
+        for(int i =0;i<intervals.length-1;i++){
+            if((intervals[i][0]>intervals[i+1][0] && intervals[i][1]>intervals[i][1]) || (intervals[i][0]<intervals[i+1][0] && intervals[i][1]<intervals[i][1])){
+                int x=0;
+            }
+            else{
+                ans1.add(LapIntervals(intervals[i],intervals[i+1]));
+            }
+        }
+        System.out.print(ans1);
+        int[][] ans = new int[ans1.size()][2];
+        for(int i =0;i<ans1.size();i++){
+            ans[i]=ans1.get(i);
+        }
+        return ans;
     }
-    public int DivAndSolve(int[] arr,int i,int j,int max){
-        int mid=(i+j)/2;
-        if(j-i<=2){return Math.max(Math.max(arr[i],arr[j]),arr[mid]);}
-        max=Math.max(DivAndSolve(arr,i,mid-1,max),DivAndSolve(arr,mid+1,j,max));
-        return Math.max(arr[mid],max);
+    public int[] LapIntervals(int[] ar1,int[] ar2){
+        int [] newarr = new int[2];
+        System.out.print(Arrays.toString(ar1));
+        if(ar1[0]>=ar2[0]){newarr[0]=ar2[0];}
+        else{newarr[0]=ar1[0];}
+        if(ar1[1]>=ar2[1]){newarr[1]=ar1[1];}
+        else{newarr[1]=ar2[1];}
+        return newarr;
     }
 }
