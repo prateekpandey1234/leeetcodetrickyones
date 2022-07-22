@@ -1,12 +1,37 @@
+
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+class Node {
+    int val;
+    Node next;
+    Node random;
 
+    public Node(int val) {
+        this.val = val;
+        this.next = null;
+        this.random = null;
+    }
+}
 public class Practice {
-    public int reversePairs(int[] nums) {
-        int count =0;
-        Arrays.sort(nums);
-        for(int i=0;i<nums.length && nums[i]*2<=nums[nums.length-1];i++)count++;
-        return count;
+    public Node copyRandomList(Node head) {
+        Node temp =head;
+        ArrayList<Node> list = new ArrayList<>();
+        while(temp!=null){
+            list.add(new Node(temp.val);
+            temp = temp.next;
+        }
+        Node newhead = new Node(head.val);
+        temp=head;
+        while(temp!=null ){
+
+            newhead.val = temp.val;
+            newhead.random = list.indexOf();
+            newhead = newhead.next;
+            temp=temp.next;
+        }
+        return newhead;
     }
 }
