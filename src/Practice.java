@@ -1,37 +1,21 @@
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-class Node {
-    int val;
-    Node next;
-    Node random;
+import java.util.*;
 
-    public Node(int val) {
-        this.val = val;
-        this.next = null;
-        this.random = null;
-    }
-}
 public class Practice {
-    public Node copyRandomList(Node head) {
-        Node temp =head;
-        ArrayList<Node> list = new ArrayList<>();
-        while(temp!=null){
-            list.add(new Node(temp.val);
-            temp = temp.next;
-        }
-        Node newhead = new Node(head.val);
-        temp=head;
-        while(temp!=null ){
 
-            newhead.val = temp.val;
-            newhead.random = list.indexOf();
-            newhead = newhead.next;
-            temp=temp.next;
+    public int[] kWeakestRows(int[][] mat, int k) {
+        int m = mat.length,n=mat[0].length;
+        ArrayList<Integer> ans = new ArrayList<>();
+        for(int j=m-1;j>-1;j--){
+            for(int i=0;i<n;i++){
+                if(mat[j][i]==1 && !ans.contains(i)){ans.add(0,i);}
+            }
         }
-        return newhead;
+        int[] ans2 = new int[k];
+        for(int i=0;i< ans2.length;i++){
+            ans2[i]=ans.get(i);
+        }
+        return ans2;
     }
 }
