@@ -4,18 +4,41 @@ import java.util.*;
 
 public class Practice {
 
-    public int[] kWeakestRows(int[][] mat, int k) {
-        int m = mat.length,n=mat[0].length;
-        ArrayList<Integer> ans = new ArrayList<>();
-        for(int j=m-1;j>-1;j--){
-            for(int i=0;i<n;i++){
-                if(mat[j][i]==1 && !ans.contains(i)){ans.add(0,i);}
+    public String removeDuplicateLetters(String s) {
+        HashMap<Character,Integer> Map = new HashMap<>();
+        StringBuilder ans = new StringBuilder();
+        int i=0;
+        int lexsum=0;
+        while(i<s.length()){
+            char[] subarr = Arrays.copyOfRange(s.toCharArray(),0,i);
+            if(!Map.containsKey(s.charAt(i))){
+                Map.put(s.charAt(i),i);
+                ans.append(s.charAt(i));
+                lexsum = checkorder(subarr,i);
+                System.out.println(lexsum);
+                System.out.println(subarr);
             }
+            else{
+                int newlexsum = checkorder(subarr,i);
+                if(newlexsum>lexsum){
+                    ans.deleteCharAt(Map.get(s.charAt(i)));
+                    ans.append(s.charAt(i));
+                    lexsum = newlexsum;
+                    System.out.println("lex");
+                }
+            }
+            i++;
         }
-        int[] ans2 = new int[k];
-        for(int i=0;i< ans2.length;i++){
-            ans2[i]=ans.get(i);
+        return ans.toString();
+    }
+    public int checkorder(char[] str , int i ){
+        int sum = 0;
+        for(int j =0;j<str.length-1;j++){
+            if(str[j+1]>str[j]){
+                sum++;}
+            else
+            {sum--;};
         }
-        return ans2;
+        return sum;
     }
 }
