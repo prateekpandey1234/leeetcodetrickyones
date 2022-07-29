@@ -4,41 +4,28 @@ import java.util.*;
 
 public class Practice {
 
-    public String removeDuplicateLetters(String s) {
-        HashMap<Character,Integer> Map = new HashMap<>();
-        StringBuilder ans = new StringBuilder();
-        int i=0;
-        int lexsum=0;
-        while(i<s.length()){
-            char[] subarr = Arrays.copyOfRange(s.toCharArray(),0,i);
-            if(!Map.containsKey(s.charAt(i))){
-                Map.put(s.charAt(i),i);
-                ans.append(s.charAt(i));
-                lexsum = checkorder(subarr,i);
-                System.out.println(lexsum);
-                System.out.println(subarr);
-            }
-            else{
-                int newlexsum = checkorder(subarr,i);
-                if(newlexsum>lexsum){
-                    ans.deleteCharAt(Map.get(s.charAt(i)));
-                    ans.append(s.charAt(i));
-                    lexsum = newlexsum;
-                    System.out.println("lex");
-                }
-            }
-            i++;
-        }
-        return ans.toString();
+    public List<List<String>> partition(String s) {
+        List<List<String>> ans = new ArrayList<>();
+        subseq(ans,s.toCharArray(),new ArrayList<>(),0,s.length());
+        return ans;
     }
-    public int checkorder(char[] str , int i ){
-        int sum = 0;
-        for(int j =0;j<str.length-1;j++){
-            if(str[j+1]>str[j]){
-                sum++;}
-            else
-            {sum--;};
+    public void subseq(List<List<String>> res,char[] s , List<String> ls , int l,int r){
+        if(l>r){
+            if(pallindome(ls,0,ls.size()-1)){
+                res.add(new ArrayList<>(ls));
+            }
+            return;
         }
-        return sum;
+        ls.add(String.valueOf(s[l]));
+        subseq(res,s,ls,l+1,r);
+        ls.remove(ls.size()-1);
+        subseq(res,s,ls,l+1,r);
+    }
+    public boolean pallindome(List<String> s,int l,int r){
+        if(l>r){
+            return true;
+        }
+        if(s.get(l)!=s.get(r)){return false;}
+        return pallindome(s,l+1,r-1);
     }
 }
