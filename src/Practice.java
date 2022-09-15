@@ -1,31 +1,32 @@
 
+
 import java.lang.reflect.Array;
+import java.net.Inet4Address;
 import java.util.*;
 
-public class Practice {
 
-    public List<List<String>> partition(String s) {
-        List<List<String>> ans = new ArrayList<>();
-        subseq(ans,s.toCharArray(),new ArrayList<>(),0,s.length());
-        return ans;
+public class Practice {
+    public int cherryPickup(int[][] a) {
+        return helper(a,0,0,a.length-1,0);
     }
-    public void subseq(List<List<String>> res,char[] s , List<String> ls , int l,int r){
-        if(l>r){
-            if(pallindome(ls,0,ls.size()-1)){
-                res.add(new ArrayList<>(ls));
+    public int helper(int[][] a,int i,int j1,int j2,int maxi){
+        if(j1<0 || j2<0 || j1>a.length-1 || j2>a.length-1) return Integer.MIN_VALUE;
+        if(i==a.length-1){
+            if(j1==j2) return a[i][j1];
+            return a[i][j1]+a[i][j2];
+        }
+        for(int dj1 = -1;dj1<2;dj1++){
+            for(int dj2=-1;dj2<2;dj2++){
+                if(j1==j2){
+                    maxi = Math.max(maxi,helper(a,i,j1+dj1,j2+dj2,maxi)+a[i][j1]);
+                }
+                else{
+                    maxi = Math.max(maxi,helper(a,i,j1+dj1,j2+dj2,maxi)+a[i][j1]+a[i][j2]);
+                }
             }
-            return;
         }
-        ls.add(String.valueOf(s[l]));
-        subseq(res,s,ls,l+1,r);
-        ls.remove(ls.size()-1);
-        subseq(res,s,ls,l+1,r);
+        return maxi;
     }
-    public boolean pallindome(List<String> s,int l,int r){
-        if(l>r){
-            return true;
-        }
-        if(s.get(l)!=s.get(r)){return false;}
-        return pallindome(s,l+1,r-1);
-    }
+
+
 }
