@@ -12,6 +12,7 @@ public class AlienDictionary {
         int indegree[] = new int[K];
         for(int i = 0; i < K; i++)
             adj.add(new ArrayList<>());
+        //here we are creating our adjancey list ... using the basic dictionary way of ascending order
         for(int i = 0; i < N - 1; i++){
             String s1 = dict[i],s2 = dict[i+1];
             int j = 0,k = 0;
@@ -20,6 +21,7 @@ public class AlienDictionary {
                     j++;
                     k++;
                 }
+
                 else{
                     adj.get(s1.charAt(j)-'a').add(s2.charAt(k)-'a');
                     indegree[s2.charAt(k)-'a']++;
@@ -27,6 +29,7 @@ public class AlienDictionary {
                 }
             }
         }
+        //in graph question ... if there is need of a order specifically ... then use topo sort...
         Queue<Integer> q = new LinkedList<>();
         for(int i = 0; i < K; i++)
             if(indegree[i] == 0)

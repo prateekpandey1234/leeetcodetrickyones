@@ -17,8 +17,9 @@ public class Subsets2 {
     public void helper(List<List<Integer>> res, List<Integer> ls, int[] nums, int pos) {
         res.add(new ArrayList<>(ls));//Constructs a list containing the elements of the specified collection,
                                      // in the order they are returned by the collection's iterator.
-        for(int i=pos;i<nums.length;i++) {
+        for(int i=pos;i<nums.length && !ls.isEmpty() ;i++) {
             //avoiding the duplicates
+            if(ls.contains(nums[i]))
             if(i>pos&&nums[i]==nums[i-1]) continue;
             ls.add(nums[i]);
             helper(res,ls,nums,i+1);

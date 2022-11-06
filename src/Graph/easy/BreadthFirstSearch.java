@@ -24,7 +24,7 @@ public class BreadthFirstSearch {
             // If a adjacent has not been visited, then mark it
             // visited and enqueue it
             for (Integer it: adj.get(node)) {
-                if (vis[it] == false) {
+                if (!vis[it]) {
                     vis[it] = true;
                     q.add(it);
                 }
