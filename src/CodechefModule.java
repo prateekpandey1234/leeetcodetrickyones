@@ -7,9 +7,11 @@ public class CodechefModule {
     {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int t= Integer.parseInt(br.readLine());
+
         for(int x=0;x<t;x++){
             int n = Integer.parseInt(br.readLine());
             int[] arr = new int[n];
             String singleLine = br.readLine();
-            String[] brokenLine = singleLine.split(" ");}}
+            int num = Integer.parseInt(singleLine.split(" ")[0]);
+        }}
 }

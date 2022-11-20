@@ -16,4 +16,5 @@ public class SymmetricBinaryTreeEasy {
         }
         return root1.val==root2.val && isSysmmetriccheck(root1.left,root2.right) && isSysmmetriccheck(root1.right,root2.left);
     }
+
 }
