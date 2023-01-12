@@ -2,7 +2,14 @@ package Arrays.easy;
 
 import java.util.ArrayList;
 import java.util.List;
+import BinaryTree.TreeNode;
+import Graph.easy.DisjointSet;
+import HashTables.HashTable;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.lang.reflect.Array;
+import java.util.*;
 public class PascalTriangle {
     public List<List<Integer>> generate(int numRows) {
         List<List<Integer> > al = new ArrayList<List<Integer> > (numRows);

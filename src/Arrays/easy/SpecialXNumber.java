@@ -1,7 +1,7 @@
 package Arrays.easy;
 /**the reason we used binary search here is to access that x from 1...n not from the list
  * because it may or may not be in the array ... hence apply binary search in list of number to find the smallest
- * number possible which satisfies the condtn*/
+ * number possible which satisfies the condition*/
 public class SpecialXNumber {
     public int specialArray(int[] nums) {
         int low = 0;

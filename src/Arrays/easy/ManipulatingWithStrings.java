@@ -1,7 +1,7 @@
 package Arrays.easy;
 /**Now we loop through the entire String of magazine where char c stores the char at the index of magazine..
 
- You might think why I types c-'a'
+ You might think why I typed c-'a'
  It is because in ascii if you subtract any char with 'a' , it gives you index of that alphabet.*/
 public class ManipulatingWithStrings {
     public boolean canConstruct(String ransomNote, String magazine) {
