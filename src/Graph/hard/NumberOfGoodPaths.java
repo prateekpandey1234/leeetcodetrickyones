@@ -1,20 +1,8 @@
+package Graph.hard;
 
-
-import BinaryTree.TreeNode;
-import Graph.easy.DisjointSet;
-import HashTables.HashTable;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.util.*;
 
-
-public class Practice {
-    public static void main(String[] args){
-        System.out.println((float) 4/333);
-
-    }
+public class NumberOfGoodPaths {
     class UnionFind {
         int[] parent;
         int[] rank;
@@ -100,7 +88,4 @@ public class Practice {
             return goodPaths;
         }
     }
-
 }
-
-
