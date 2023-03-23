@@ -44,10 +44,10 @@ public class DjasktraAlgo {
             for (ArrayList<Integer> list : graph) {
 
                 int dest = list.get(0);
-                int toReachDestination = list.get(1);
+                int toReachDestinationdist = list.get(1);
 
-                if (wt + toReachDestination < distance[dest]) {
-                    distance[dest] = wt + toReachDestination;
+                if (wt + toReachDestinationdist < distance[dest]) {
+                    distance[dest] = wt + toReachDestinationdist;
                     pq.add(new Pair(dest, distance[dest]));
                 }
             }
