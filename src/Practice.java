@@ -12,22 +12,26 @@ import java.net.Inet4Address;
 import java.util.*;
 import java.util.concurrent.ConcurrentMap;
 
-
 public class Practice {
     public static void main(String[] args) {
-            System.out.println(Math.pow(2,31)>Integer.MAX_VALUE);
+        System.out.println(Math.pow(2,31)>Integer.MAX_VALUE);
 
     }
-
-    public int minimizeArrayValue(int[] nums) {
-        int max=0;
-        for(int i=0;i<nums.length-1;i++){
-            if(nums[i+1]!=0 && nums[i+1]>nums[i]){
-                int avg =nums[i+1]+nums[i];
-                max=Math.max(nums[i+1],(avg%2==0)?avg/2:avg/2+1);
-            }
+    public int maxProduct(String[] words) {
+        int max=0,min=1;
+        if(words[0].length()< words[1].length()){
+            max=1;min=0;
         }
-        return max;
+        for(int i=2;i<words.length;i++){
+            if(words[i].length()>words[max].length() && ) {
+                int tm = max;
+                max=i;
+                min=tm;
+            }
+            else if(words[i].length()>words[min].length())
+        }
+
     }
+
 
 }
