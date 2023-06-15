@@ -1,4 +1,4 @@
-package DyanamicProgramming.medium;
+package HashTables.Medium;
 
 import java.util.ArrayList;
 import java.util.List;
