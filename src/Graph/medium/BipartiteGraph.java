@@ -6,7 +6,7 @@ import java.util.Queue;
 public class BipartiteGraph {
     private boolean check(int start, int V,
                           int[][] graph, int color[]) {
-        Queue<Integer> q = new LinkedList<Integer>();
+        Queue<Integer> q = new LinkedList<>();
         q.add(start);
         color[start] = 0;
         while(!q.isEmpty()) {

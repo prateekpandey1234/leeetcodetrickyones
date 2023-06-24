@@ -3,7 +3,7 @@ package RecursionAndBacktracking.medium;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CombinationSum {
+public class CombinationSumDone {
     private void findCombinations(int ind, int[] arr, int target, List <List< Integer >> ans, List < Integer > ds) {
         if (ind == arr.length) {
             if (target == 0) {

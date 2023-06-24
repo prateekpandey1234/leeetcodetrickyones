@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class ChaepestFlightKStops {
+public class ChaepestFlightKStopsDONE {
     class Solution {
         public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
             // create a graph using adjacency list  of Pair type.
