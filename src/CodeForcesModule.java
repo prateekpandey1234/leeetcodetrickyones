@@ -1,38 +1,43 @@
+import java.awt.*;
 import java.io.*;
 import java.util.*;
 import java.lang.*;
 
+import static java.lang.System.out;
+
 public class CodeForcesModule {
+    static  int[] dp;
     public static void main(String[] args) throws IOException {
         FastReader s = new FastReader();
         PrintWriter out = new PrintWriter(System.out);
-        int n = s.nextInt();
-        long[] arr = s.nextArrayLong(n);
-        long[] sorted = Arrays.copyOf(arr, n);
-        Arrays.sort(sorted);
-        for(int i = 1; i < n; i++){
-            arr[i] += arr[i - 1];
-            sorted[i] += sorted[i - 1];
-        }
-        int t = s.nextInt();
-        while(t-->0){
-            int type = s.nextInt(), l = s.nextInt(), r = s.nextInt();
-            if(type == 1){
-                if(l == 1){
-                    out.println(arr[r - 1]);
-                    continue;
-                }
-                out.println(arr[r - 1] - arr[l - 2]);
-            }
-            else{
-                if(l == 1){
-                    out.println(sorted[r - 1]);
-                    continue;
-                }
-                out.println(sorted[r - 1] - sorted[l - 2]);
+        int n = s.nextInt(),k=s.nextInt(),d=s.nextInt();
+        dp=new int[n+1];
+        int[] arr= new int[k+1];
+        for(int i=1;i<k+1;i++){
+            if(i<=n){
+                helper(arr,d,k,i,n-i);
             }
         }
+        out.println(d);
+        out.println(k);
+        out.println(n);
+        out.println(Arrays.toString(dp));
         out.flush();
+    }
+    public static int helper(int[] arr ,int d,int k,int i, int curr){
+        if(curr==0)return (arr[d]!=0)?1:0;
+        if(dp[curr]!=0)return dp[curr];
+        arr[i]=1;
+        int w=0;
+        System.out.println(Arrays.toString(arr));
+        for(int j=1;j<k+1;j++){
+            if(j<=curr){
+                arr[j]=1;
+                w+=helper(arr,d,k,i,curr-j);
+                arr[j]=0;
+            }
+        }
+        return dp[curr]=w;
     }
 
     public static class FastReader {

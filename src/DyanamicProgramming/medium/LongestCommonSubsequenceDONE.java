@@ -2,7 +2,7 @@ package DyanamicProgramming.medium;
 
 import java.util.Arrays;
 
-public class LongestCommonSubsequence {
+public class LongestCommonSubsequenceDONE {
     //tabulation
     public int longestCommonSubsequence(String text1, String text2) {
         int n = text1.length() ;

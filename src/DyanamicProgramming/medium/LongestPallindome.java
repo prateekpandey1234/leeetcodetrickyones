@@ -34,7 +34,7 @@ public class LongestPallindome {
                 // l  r
                 // abca ...  //a = a, ok
                 if (s.charAt(l) != s.charAt(r)) continue;
-                // l  r
+                //  lr
                 // abca ...   //b != c continue
                 if (l + 1 < r - 1 && !dp[l + 1][r - 1]) continue;//checking states before
                 dp[l][r] = true;

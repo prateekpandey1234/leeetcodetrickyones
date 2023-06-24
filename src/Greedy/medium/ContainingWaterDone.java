@@ -1,6 +1,6 @@
 package Greedy.medium;
 //the thing is that we need to approach max area by moving the pointers themselves... its not that hard...
-public class ContainingWater {
+public class ContainingWaterDone {
     public int maxArea(int[] height) {
         int left = 0, right = height.length - 1;
         int maxArea = 0;
