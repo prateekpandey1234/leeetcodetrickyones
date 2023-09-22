@@ -1,120 +1,56 @@
-import java.awt.*;
-import java.io.*;
 import java.util.*;
-import java.lang.*;
+import java.io.*;
 
-import static java.lang.System.out;
+ class Codeforces {
+    static int n;
+    static int [] getSubTreeSize;
+    static ArrayList<ArrayList<Integer>> graph;
 
-public class CodeForcesModule {
-    static  int[] dp;
-    public static void main(String[] args) throws IOException {
-        FastReader s = new FastReader();
-        PrintWriter out = new PrintWriter(System.out);
-        int n = s.nextInt(),k=s.nextInt(),d=s.nextInt();
-        dp=new int[n+1];
-        int[] arr= new int[k+1];
-        for(int i=1;i<k+1;i++){
-            if(i<=n){
-                helper(arr,d,k,i,n-i);
-            }
-        }
-        out.println(d);
-        out.println(k);
-        out.println(n);
-        out.println(Arrays.toString(dp));
-        out.flush();
-    }
-    public static int helper(int[] arr ,int d,int k,int i, int curr){
-        if(curr==0)return (arr[d]!=0)?1:0;
-        if(dp[curr]!=0)return dp[curr];
-        arr[i]=1;
-        int w=0;
-        System.out.println(Arrays.toString(arr));
-        for(int j=1;j<k+1;j++){
-            if(j<=curr){
-                arr[j]=1;
-                w+=helper(arr,d,k,i,curr-j);
-                arr[j]=0;
-            }
-        }
-        return dp[curr]=w;
-    }
-
-    public static class FastReader {
-        BufferedReader br;
+    public static void main(String[] args) throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
 
-        public FastReader() {
-            br = new BufferedReader(new InputStreamReader(System.in));
-        }
+        int n = Integer.parseInt(br.readLine());
+        st = new StringTokenizer(br.readLine());
+        int [] p = new int[n + 1];
+        for (int i = 2; i <= n; i++) p[i] = Integer.parseInt(st.nextToken());
+        graph = new ArrayList<> ();
+        for (int i = 0; i <= n; i++) graph.add(new ArrayList<> ());
+        for (int i = 2; i <= n; i++) graph.get(p[i]).add(i);
 
-        public String next() throws IOException {
-            while (st == null || !st.hasMoreElements()) {
-                try {
-                    st = new StringTokenizer(br.readLine());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            return st.nextToken();
-        }
+        getSubTreeSize = new int[n + 1];
+        dfs1(1); // Find subtree sizes
+        dfs2(1); // Find answer
+        System.out.println(res);
 
-        int nextInt() throws IOException {
-            return Integer.parseInt(next());
-        }
+        br.close();
+    }
 
-        long nextLong() throws IOException {
-            return Long.parseLong(next());
-        }
+    public static int dfs1(int node) {
+        int size = 1;
+        for (int i: graph.get(node)) {
+            size += dfs1(i);
+        } return getSubTreeSize[node] = size;
+    }
 
-        double nextDouble() throws IOException {
-            return Double.parseDouble(next());
+    static int res = 0;
+    public static void dfs2(int node) {
+        ArrayList<Integer> childrenSizes = new ArrayList<> ();
+        for (int i: graph.get(node)) childrenSizes.add(getSubTreeSize[i]);
+        int sum = 0;
+        for (int i: childrenSizes) sum += i;
+        // DP
+        boolean [] dp = new boolean[sum + 1]; dp[0] = true;
+        for (int i: childrenSizes) {
+            //here sum also means number of nodes in subtree
+            //we are making every possible sum true such that 2 subtree exists with sum j and i
+            for (int j = sum; j >= i; j--) dp[j] |= dp[j - i];
         }
-
-        String nextLine() throws IOException {
-            String str = "";
-            if (st != null && st.hasMoreTokens()) {
-                str = st.nextToken("\n");
-            } else {
-                str = br.readLine();
-            }
-            return str;
-        }
-
-        int[] nextArrayInt(int n) throws IOException {
-            int[] arr = new int[n];
-            for (int i = 0; i < n; i++) {
-                arr[i] = nextInt();
-            }
-            return arr;
-        }
-
-        long[] nextArrayLong(int n) throws IOException {
-            long[] arr = new long[n];
-            for (int i = 0; i < n; i++) {
-                arr[i] = nextLong();
-            }
-            return arr;
-        }
-
-        double[] nextArrayDouble(int n) throws IOException {
-            double[] arr = new double[n];
-            for (int i = 0; i < n; i++) {
-                arr[i] = nextDouble();
-            }
-            return arr;
-        }
-
-        String[] nextArrayString(int n) throws IOException {
-            String[] arr = new String[n];
-            for (int i = 0; i < n; i++) {
-                arr[i] = next();
-            }
-            return arr;
-        }
-
-        char[] nextArrayChar() throws IOException {
-            return next().toCharArray();
-        }
+        int maxProd = 0;
+        for (int i = 0; i <= sum / 2; i++)
+            //taking only those sums whose subtree is possible here
+            if (dp[i]) maxProd = Math.max(maxProd, i * (sum - i));
+        res += maxProd;
+        for (int i: graph.get(node)) dfs2(i);
     }
 }

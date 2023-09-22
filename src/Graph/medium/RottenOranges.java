@@ -65,7 +65,6 @@ public class RottenOranges {
                 }
             }
         }
-
         // if all oranges are not rotten
         if (cnt != cntFresh) return -1;
         return tm;

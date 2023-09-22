@@ -27,5 +27,5 @@ public class PossibleTiles {
             visited[i] = false;
         }
     }
-    //we can also use simple bfs here using set, but it will 10 times the time-consuming
+    //we can also use simple dfs here using set, but it will 100 times the time-consuming
 }

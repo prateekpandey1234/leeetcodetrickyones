@@ -73,7 +73,7 @@ public class LongestPallindome {
 
         return dp[n][m];
     }
-
+//reversing it allows us to perform longest common subsequence method on original and reversed string
     static int longestPalindromeSubsequence(String s){
         String t = s;
         String ss=new StringBuilder(s).reverse().toString();

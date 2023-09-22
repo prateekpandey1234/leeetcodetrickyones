@@ -23,6 +23,8 @@ public class BellmanFord {
             }
         }
         //for detecting negative cycles;
+        //checking whether there is a condition even after N-1 iterations we are getting lower weight
+        // if it does happen then for sure our cycle is negative
         for(ArrayList<Integer> it:edges){
             int u=it.get(0);
             int v = it.get(1);

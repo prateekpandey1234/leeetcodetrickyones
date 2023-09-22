@@ -20,6 +20,7 @@ public class EventualSafeNodes {
             }
             // if the node has been previously visited
             // but it has to be visited on the same path
+            //all the nodes in this path will get there check value as 1
             else if (pathVis[it] == 1) {
                 return true;
             }

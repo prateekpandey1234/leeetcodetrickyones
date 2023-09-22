@@ -32,7 +32,7 @@ public class MinimumHeightTree {
                 }
                 inDegree[i]=G.get(i).size();
             }
-
+            //we take the condition of n>2 also here as we can imagine that maximum number of answers would be 2
             while (n > 2) {
                 for (int leaf : leaves) {
                     for (int adj : G.get(leaf)) {

@@ -27,17 +27,18 @@ public class KruskalAlgo {
             }
         }
         //disjoint as we defined as earlier in different class
-        DisjointSet ds = new DisjointSet(V);
+        DSU ds = new DSU(V);
         //sorting the edges
         Collections.sort(edges);
         int mstWt=0;
+        //adding the minimum weight of edges as they are sorted
         for(int i=0;i< edges.size();i++){
             int wt = edges.get(i).wt;
             int u = edges.get(i).src;
             int v= edges.get(i).dest;
-            if(ds.findUPar(u)!=ds.findUPar(v)){
+            if(ds.find(u)!=ds.find(v)){
                 mstWt+=wt;
-                ds.unionBySize(u,v);
+                ds.union(u,v);
             }
         }
         return mstWt;

@@ -3,7 +3,6 @@ package Arrays.easy;
 import java.util.ArrayList;
 import java.util.List;
 import BinaryTree.TreeNode;
-import Graph.easy.DisjointSet;
 import HashTables.HashTable;
 
 import java.io.BufferedReader;

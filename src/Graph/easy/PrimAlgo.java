@@ -10,7 +10,7 @@ public class PrimAlgo {
 
         public Pair(int dist, int node) {
             this.dist = dist;
-            this.node = dist;
+            this.node = node;
         }
 
         public int PrimsAlgo(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj) {
@@ -26,6 +26,7 @@ public class PrimAlgo {
                 if (vis[node] == 1) continue;
                 vis[node] = 1;
                 sum += wt;
+                //here we are only selecting that are connected but also with minimum weight
                 for (int i = 0; i < adj.get(node).size(); i++) {
                     int edW = adj.get(node).get(i).get(1);
                     int adjNode = adj.get(node).get(i).get(0);

@@ -49,7 +49,7 @@ public class UglyNumber {
 //Dp solution
 //We know that the sequence of ugly numbers is 1, 2, 3, 4, 5, 6, 8, 9....
 
-// All our ugly numbers are 2, 3, 5generated , so the sequence of ugly numbers can be seen as below.
+// All our ugly numbers are 2, 3, 5 generated , so the sequence of ugly numbers can be seen as below.
 
 // 1, 1×2, 1×3, 2×2, 1×5, 2×3, 2×4, 3×3...。
 

@@ -1,17 +1,14 @@
 package Graph.easy;
 
-import java.util.Scanner;
-
 public class FloydWarshall {
+    //is also used for multisource shortest path
     public void shortest_distance(int[][] matrix)
     {
         //modifying our adjacency list
-        Scanner sc = new Scanner(System.in);
-
         int n = matrix.length;
         for(int i=0;i<n;i++){
             for(int j=0;j<n;j++){
-                if(matrix[i][j]==-1)matrix[i][j]=(int)(1e9);
+                if(matrix[i][j]==-1)matrix[i][j]=(int)(1e9);// i,j are not connected directly
                 if(i==j)matrix[i][j]=0;
             }
         }
@@ -24,5 +21,8 @@ public class FloydWarshall {
                 }
             }
         }
+        //if there was to be a negative cycle then it will appear as we check for
+        // matrix[i][i] <0 , where ith node is part of negative cycle, but we know that
+        // matrix[i][i] =0 always
     }
 }

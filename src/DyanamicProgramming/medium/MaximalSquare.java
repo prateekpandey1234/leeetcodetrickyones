@@ -29,6 +29,7 @@ public class MaximalSquare {
             //so the need of using min instead of max is that we need to tell our parent node that we have reached either 0 or another 1
             //for example let submatrix = [1,1,1,0]
             //then for we will get ---> MIN(helper(i,j-1)=1 , helper(i-1,j)=1,helper(i-1,j-1)=0) = 0 which will tell us that we can not form square here
+            //this allows us to check row , col and the smaller square forming up diagonally if there is so
         }
     }
 }
