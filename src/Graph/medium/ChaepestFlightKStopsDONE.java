@@ -72,7 +72,7 @@ public class ChaepestFlightKStopsDONE {
                 this.st = st;
             }
         }
-        public class Pair{
+        class Pair{
             int first;
             int sec;
             public Pair(int first , int sec){

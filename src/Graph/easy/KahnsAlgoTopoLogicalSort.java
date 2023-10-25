@@ -15,7 +15,7 @@ public class KahnsAlgoTopoLogicalSort {
             }
         }
 
-        Queue<Integer> q = new LinkedList<Integer>();
+        Queue<Integer> q = new LinkedList<>();
         for (int i = 0; i < V; i++) {
             if (indegree[i] == 0) {
                 q.add(i);

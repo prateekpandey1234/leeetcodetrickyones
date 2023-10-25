@@ -2,55 +2,68 @@ import java.util.*;
 import java.io.*;
 
  class Codeforces {
-    static int n;
-    static int [] getSubTreeSize;
-    static ArrayList<ArrayList<Integer>> graph;
+     //    public static void main(String[] args) throws IOException{
+//        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//        StringTokenizer st = new StringTokenizer(br.readLine());
+//        int n = Integer.parseInt(st.nextToken()),q = Integer.parseInt(st.nextToken());
+//        int[] arr = new int[n];
+//        st = new StringTokenizer(br.readLine());
+//        for(int i=0;i<n;i++){
+//            if(i==n-1){
+//            String s  = st.nextToken();
+//            arr[i]=s.charAt(0)-'0';
+//        } else arr[i]=Integer.parseInt(st.nextToken());}
+//        for(int i=1;i<n;i++){
+//
+//            arr[i]=Math.min(arr[i],arr[i-1]);
+//        }
+//        st = new StringTokenizer(br.readLine());
+//        for(int i=0;i<q;i++){
+//            int x = Integer.parseInt(st.nextToken());
+//            if(x==n-1)System.out.print(Math.min(arr[x],arr[x-1])+" ");
+//            else System.out.print(arr[x]+" ");
+//        }
+//    }
+//    public static void main(String[] args) throws IOException{
+//        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//        String s = br.readLine();
+//        int[] arr = new int[26];
+//        char ch = '1';
+//        for(int i=0;i<s.length();i++){
+//            arr[s.charAt(i)-'a']++;
+//        }
+//        for(int i=0;i<s.length();i+=2){
+//            if(arr[s.charAt(i)-'a']==1){
+//                ch=s.charAt(i);
+//                System.out.println(ch);
+//                break;
+//            }
+//        }
+//        for(int i=1;i<s.length();i+=2){
+//            if(ch=='1' && arr[s.charAt(i)-'a']==1){
+//                ch = s.charAt(i);
+//                System.out.println(ch);
+//                break;
+//            }
+//        }
+//        System.out.println((ch=='1')?"-1":" ");
+//    }
+     public static void main(String[] args) throws IOException{
+         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+         StringTokenizer st = new StringTokenizer(br.readLine());
+         int n= Integer.parseInt(st.nextToken());
+         int[] arr =  new int[n];
+         st = new StringTokenizer(br.readLine());
+         int ans=0;
+         for(int i=0;i<n;i++)arr[i]=Integer.parseInt(st.nextToken());
+         Set<Integer> set = new HashSet<>();
+         for(int i=0;i<n;i++){
+             for(int j=0;j<n && j!=i;j++){
+                 if(!set.contains(arr[i]*arr[j]))set.add(arr[i]*arr[j]);
+                 else ans++;
+             }
+         }
+         System.out.println(ans/2);
 
-    public static void main(String[] args) throws IOException{
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st;
-
-        int n = Integer.parseInt(br.readLine());
-        st = new StringTokenizer(br.readLine());
-        int [] p = new int[n + 1];
-        for (int i = 2; i <= n; i++) p[i] = Integer.parseInt(st.nextToken());
-        graph = new ArrayList<> ();
-        for (int i = 0; i <= n; i++) graph.add(new ArrayList<> ());
-        for (int i = 2; i <= n; i++) graph.get(p[i]).add(i);
-
-        getSubTreeSize = new int[n + 1];
-        dfs1(1); // Find subtree sizes
-        dfs2(1); // Find answer
-        System.out.println(res);
-
-        br.close();
-    }
-
-    public static int dfs1(int node) {
-        int size = 1;
-        for (int i: graph.get(node)) {
-            size += dfs1(i);
-        } return getSubTreeSize[node] = size;
-    }
-
-    static int res = 0;
-    public static void dfs2(int node) {
-        ArrayList<Integer> childrenSizes = new ArrayList<> ();
-        for (int i: graph.get(node)) childrenSizes.add(getSubTreeSize[i]);
-        int sum = 0;
-        for (int i: childrenSizes) sum += i;
-        // DP
-        boolean [] dp = new boolean[sum + 1]; dp[0] = true;
-        for (int i: childrenSizes) {
-            //here sum also means number of nodes in subtree
-            //we are making every possible sum true such that 2 subtree exists with sum j and i
-            for (int j = sum; j >= i; j--) dp[j] |= dp[j - i];
-        }
-        int maxProd = 0;
-        for (int i = 0; i <= sum / 2; i++)
-            //taking only those sums whose subtree is possible here
-            if (dp[i]) maxProd = Math.max(maxProd, i * (sum - i));
-        res += maxProd;
-        for (int i: graph.get(node)) dfs2(i);
-    }
+     }
 }
