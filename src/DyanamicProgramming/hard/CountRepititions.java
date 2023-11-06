@@ -1,17 +1,8 @@
+package DyanamicProgramming.hard;
 
+import java.util.Arrays;
 
-
-
-
-import java.io.*;
-
-import java.lang.reflect.Array;
-import java.util.*;
-
-public class Practice {
-
-
-
+public class CountRepititions {
     //Input:
     //s1="abacb", n1=6
     //s2="bcaa", n2=1
@@ -90,14 +81,4 @@ public class Practice {
             return res / n2;
         }
     }
-
-
 }
-
-
-
-
-
-
-
-
