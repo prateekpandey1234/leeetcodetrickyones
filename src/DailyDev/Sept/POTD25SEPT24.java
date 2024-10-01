@@ -1,4 +1,4 @@
-package DailyDev;
+package DailyDev.Sept;
 
 public class POTD25SEPT24 {
     class TrieNode {

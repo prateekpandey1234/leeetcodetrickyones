@@ -1,4 +1,4 @@
-package DailyDev;
+package DailyDev.Sept;
 
 public class POTD24SEPT24 {
     // needed bit of hint , but did good implementation
