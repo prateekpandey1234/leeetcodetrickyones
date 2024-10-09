@@ -1,9 +1,6 @@
 package DailyDev.October;
 
-import java.util.ArrayDeque;
-import java.util.Arrays;
-import java.util.Deque;
-import java.util.Stack;
+import java.util.*;
 
 public class POTD7OCT2024 {
     public int minLength(String s) {
@@ -81,5 +78,17 @@ class POTD6_OCT2024 {
             }
             return deque1.isEmpty() || deque2.isEmpty();
         }
+    }
+    public int[] arrayRankTransform(int[] arr) {
+        int[] org= Arrays.copyOf(arr,arr.length);
+        Arrays.sort(org);
+        HashMap<Integer,Integer> map = new HashMap<>();
+        for(int i=0;i<arr.length;i++){
+            if(!map.containsKey(org[i]))map.put(org[i],i+1);
+        }
+        for(int i=0;i<arr.length;i++){
+            org[i]=map.get(org[i]);
+        }
+        return org;
     }
 }
