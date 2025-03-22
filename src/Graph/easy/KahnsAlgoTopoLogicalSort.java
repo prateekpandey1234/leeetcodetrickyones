@@ -1,8 +1,6 @@
 package Graph.easy;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 public class KahnsAlgoTopoLogicalSort {
     static int[] topoSort(int V, ArrayList<ArrayList<Integer>> adj) {
@@ -41,4 +39,7 @@ public class KahnsAlgoTopoLogicalSort {
 
         return topo;
     }
+
+
+    
 }

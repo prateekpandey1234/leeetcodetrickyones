@@ -3,6 +3,10 @@
 
 
 
+import BinaryTree.Medium.TreeNode;
+import LinkedList.easy.ListNode;
+import kotlin.Pair;
+
 import java.io.*;
 
 import java.lang.reflect.Array;
@@ -10,93 +14,265 @@ import java.util.*;
 
 public class Practice {
 
-
-
-    //Input:
-    //s1="abacb", n1=6
-    //s2="bcaa", n2=1
-    //
-    //Return:
-    //3
-    // our intuition is that we have to find that if after certain  iterations of s1 does s2 repeat in s2
-    // we don't need to care about str2 as we would simply divide res by n2 for that as str2 is str2=s2*n2
-    // explained:
-    // indexes of s2  --> 0 1    2 3 0      1    2 3 0      1    2 3 0
-    //S1 --------------> abacb | abacb | abacb | abacb | abacb | abacb
-    //
-    //repeatCount ----->    0  |   1   |   1   |   2   |   2   |   3
-    //
-    //Increment of
-    //repeatCount     ->    0  |   1   |   0   |   1   |   0   |   1
-    //
-    //nextIndex ------->    2  |   1   |   2   |   1   |   2   |   1
-    //                                     ^
-    //									   |
-    //									 repetitive pattern found here (we've met 2 before)!
-    //									 The pattern repeated 3 times
-    class Solution {
-        public int getMaxRepetitions(String s1, int n1, String s2, int n2) {
-            int nn1 = s1.length();
-            int nn2 = s2.length();
-            //1.iterate through S1 again and again, track the pointer position of S2 at the end of each S1 iteration
-            //  continue until the S2 pointer comes back to previous position, which means we've found a cycle
-            //2.break up into 3 parts: pre-cycle, in-cycle, post-cycle
-            //   2.1.calculate loop count for the in-cycle part
-            //   2.2.snitch pre-cycle and post-cycle together, and calculate the loop count for this combined parts
-            int[][] records = new int[2][n1+1];
-            Arrays.fill(records[0], -1);
-            int index2 = 0, count = 0;
-            int cycleStart = -1, cycleEnd = -1, cycleCount = -1;
-            for (int i = 1; i <= n1; i++) {
-                //finding our next index and count of match
-                for (int j = 0; j < nn1; j++) {
-                    if (s1.charAt(j) == s2.charAt(index2)) {
-                        index2++;
-                    }
-                    if (index2 == nn2) {
-                        index2 = 0;
-                        count++;
-                    }
-                }
-                //checking whether we found our current next index in any of the previous concatenations of string s1
-                for (int k = 1; k < i; k++) {
-                    // we have seen this next index repeat before , so we don't need to go further
-                    if (records[0][k] == index2) {
-                        // we find the cycle, record start/end/count and then quit the loop
-                        cycleStart = k;// the value of concatenation where we found this next index earlier
-                        cycleEnd = i;// the value of concatenation where we found next index again
-                        cycleCount = count - records[1][k];//getting our cycle count
-                    }
-                }
-                if (cycleStart != -1) {
-                    break;
-                }
-                //storing our next index and number of s2 found within ith concatenation
-                records[0][i] = index2;
-                records[1][i] = count;
+    List<Integer> l = new ArrayList<>();
+    public List<Integer> circularPermutation(int n, int start) {
+        Set<Integer> set = new HashSet<>();
+        n=2*n-1;
+        for(int i=0;i<=n;i++)set.add(i);
+        List<Integer> curr=new ArrayList();
+        curr.add(start);
+        set.remove(start);
+        for(int i=0;i<=n;i++)
+        {
+            if(i!=start && check(i,start)){
+                set.remove(i);
+                curr.add(i);
+                dfs(curr,n,set);
+                set.add(i);
+                curr.remove(curr.size()-1);
             }
-            // there is no repetition here
-            if (cycleStart == -1) {
-                return count / n2;
-            }
-
-            int res = 0;
-            // calculate cycle
-            int cycleN = (n1 - cycleStart) / (cycleEnd - cycleStart);
-            res = cycleN * cycleCount;
-            // add  pre-cycle and post-cycle parts
-            res += records[1][n1 - cycleN * (cycleEnd - cycleStart)];
-
-            return res / n2;
         }
+        return l;
+    }
+    public void dfs(List<Integer> curr,int n , Set<Integer> s ){
+        if(s.size()==0){
+            l.addAll(curr);
+            return ;
+        }
+        for(int i=0;i<n;i++){
+            if(s.contains(i) && check(curr.get(curr.size()-2),i) ){
+                s.remove(i);
+                curr.add(curr.size()-2,i);
+                dfs(curr,n,s);
+                s.add(i);
+                curr.remove(curr.size()-2);
+            }
+        }
+        
+
+    }
+    public boolean check(int a , int b){
+        int d = Math.abs(a-b);
+        double val = (Math.log(d))/(Math.log(2));
+        return (int)val - val==0;
+    }
+    public long minNumberOfSeconds(int m, int[] wt) {
+        PriorityQueue<long[]> pq = new PriorityQueue<>((a,b)-> Math.toIntExact(a[0] - b[0]));
+        for(int i:wt){
+            pq.add(new long[]{(long)i,(long)i,(long)1});
+        }
+        while(m>1){
+            long[] c=pq.poll();
+            pq.add(new long[]{c[0]+c[1]*(c[2]+1),c[1],c[2]+1});
+            m--;
+        }
+        return (long)(pq.peek()[0]);
+    }
+    // 2112112332
+//    class Pair implements Comparable<Pair>{
+//        char c;
+//        int i;
+//        public Pair(char c, int i){
+//            this.c=c;
+//            this.i=i;
+//        }
+//
+//        @Override
+//        public int compareTo(Pair o) {
+//            return Integer.compare(o.i,this.i);
+//        }
+//    }
+    public static void main(String[] args) throws IOException{
+
+        System.out.println("123".substring(1,2));
+     }
+
+//    public int maxGoodNumber(int[] nums) {
+//
+//    }
+    public static int num(int a , int b , int c){
+        int val=a|0;
+        val=(val<<((int)(Math.log(b)/Math.log(2) +1)))|b;
+        val=(val<<((int)(Math.log(c)/Math.log(2)+1)))|c;
+        return val;
+    }
+    public long maxKelements(int[] nums, int k) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a,b)->b-a);
+        long ans=0;
+        for(int i:nums)pq.add(i);
+        while(k>0 && !pq.isEmpty()){
+            System.out.println(pq.toString());
+            int curr=pq.poll();
+            ans+=(long)curr;
+            pq.add((int)Math.ceil(curr/3));
+            k--;
+        }
+        return ans;
+    }
+    int ans;
+    public int maxUniqueSplit(String s) {
+        ans=0;
+        dfs(new HashSet<>(),s,new StringBuilder(),0);
+        return ans;
+    }
+    public void dfs(HashSet<String> curr , String s,StringBuilder c, int i){
+        if(i>=s.length()){
+            boolean ch =true;
+            int size=0;
+            for(String k:curr)size+=k.length();
+            if(size==s.length())ans=Math.max(ans,curr.size());
+            return;
+        }
+        c.append(s.charAt(i));
+        if(!curr.contains(c.toString())){
+            curr.add(c.toString());
+            dfs(curr,s,c,i+1);
+        }
+        StringBuilder st = new StringBuilder();
+        st.append(s.charAt(i));
+        if(!curr.contains(st.toString())){
+            curr.add(st.toString());
+            dfs(curr,s,st,i+1);
+        }
+    }
+    public int numberOfSubstrings(String s, int k) {
+        TreeMap<Character,Integer> map = new TreeMap<>();
+        int l=0,mx=0,ans=0;
+        for(int r=0;r<s.length();r++){
+            char ch = s.charAt(r);
+            if(!map.containsKey(ch))map.put(ch,1);
+            else map.put(ch,map.get(ch)+1);
+            Map.Entry<Character,Integer> e= map.lastEntry();
+            mx=e.getValue();
+            int curr=0;
+            while(mx==k){
+                curr+=s.length()-r;
+                char st = s.charAt(l);
+                if(st==e.getKey())mx--;
+                l++;
+            }
+            ans+=curr;
+
+        }
+        return ans;
+    }
+    public int maxEqualRowsAfterFlips(int[][] arr) {
+        int ans=1;
+
+        HashMap<Integer,Integer> map = new HashMap<>();
+        for(int i=0;i<arr.length;i++){
+            int num=0,num1=0;
+            for(int j=0;j<arr[0].length;j++){
+                if(arr[i][j]==1){
+                    num|=(1<<(j+1));
+                }
+                if(arr[i][j]==0){
+                    num1|=(1<<(j+1));
+                }
+            }
+            map.put(num,map.getOrDefault(num,0)+1);
+            map.put(num1,map.getOrDefault(num1,0)+1);
+        }
+
+        return Collections.max(map.values());
+
     }
 
 
 }
 
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public int calculate(String s) {
+        int res=0,currres=0,curr=0,prev=0,op=1;
+        Stack<Pair> stck = new Stack<>();
+        for(int i=0;i<s.length();i++){
+            char ch = s.charAt(i);
+            if(ch==' ')continue;
+            if(Character.isDigit(ch)){
+                curr=curr*10+(int)(ch-'0');
+            }
+            else if(ch=='('){
 
+                Pair p = new Pair(op,currres+op*prev);
+                stck.push(p);
+                currres=0;
+                curr=0;
+                prev=0;
+                op=1;
+            }
+            else if(ch==')'){
+                currres+=prev+op*curr;
 
+                Pair p = stck.pop();
+                currres=p.res+p.p*(currres);
+                prev=0;
+                curr=0;
+            }
+            else{
+                currres+=prev;
+                prev=(op==1)?curr:-curr;
+                // update op after doing previous operation
+                op=(ch=='+')?1:-1;
+                curr=0;
+        }
 
+        }
+        return currres;
+    }
+    class Solution {
+//        public int minOperations(int[] nums) {
+//            Queue<Integer> q = new LinkedList<>();
+//            int ans=0;
+//            for(int i=0;i<nums.length;i++){
+//                while(!q.isEmpty() && i>q.peek()+2){
+//                    q.poll();
+//                }
+//
+//                if((nums[i]+q.size())%2==0){
+//                    if(i+2>=nums.length){
+//                        return -1;
+//                    }
+//                    q.add(i);
+//                    ans++;
+//                }
+//            }
+//            return ans;
+//        }
+        public int minOperations(int[] nums) {
+            int ans=0;
+            for(int i = 0;i<nums.length;i++){
+                while(i<nums.length  && nums[i]==1)i++;
+                if(i>=nums.length)break;
+                if(i+2>=nums.length)return -1;
+                for(int k=i+0;k<=i+2 && k<nums.length;k++){
+                    nums[k]=(nums[k]==1)?0:1;
+                }
+                ans++;
+
+            }
+            return ans;
+        }
+    }
+
+    class Pair{
+        int p;
+        int res;
+        public Pair(int p, int res){
+            this.p=p;
+            this.res=res;
+        }
+    }
+}
 
 
 

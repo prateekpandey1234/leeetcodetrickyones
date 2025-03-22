@@ -35,34 +35,25 @@ public class CodeForcesModule {
 
     public static void solve() throws IOException {
         st = new StringTokenizer(br.readLine());
-        int n =Integer.parseInt(st.nextToken());
-        int[] a= new int[n],b=new int[n];
-        st = new StringTokenizer(br.readLine());
-        for(int i =0;i<n;i++)a[i]=Integer.parseInt(st.nextToken());
-        st = new StringTokenizer(br.readLine());
-        for(int i=0;i<n;i++){
-            b[i]=Integer.parseInt(st.nextToken());
+        int n=Integer.parseInt(st.nextToken());
+        if(n<5){
+            System.out.println(-1);
+            return;
         }
-        if(a[0]!=b[0]){
-            for(int i=0;i<n;i++){
-                if(a[n-1-i]!=b[i] ){
-                    System.out.println("Alice");
-                    return;
-                }
-            }
+        List<Integer> ans= new ArrayList<>();
+        ans.add(2);
+        ans.add(4);
+        ans.add(5);
+        ans.add(1);
+        ans.add(3);
+        int j=ans.size();
+        for(int i=6;i<=n;i++){
+            ans.add(j,i);
+            if(j==0)j=ans.size();
+            else j=0;
         }
-        else{
-            for(int i=0;i<n;i++){
-                if(a[i]!=b[i] ){
-                    System.out.println("Alice");
-                    return;
-                }
-            }
-        }
-
-        System.out.println("Bob");
-
-
+        for(int i:ans)System.out.print(i+" ");
+        System.out.println();
     }
 
 
@@ -167,13 +158,13 @@ class Pair implements Comparable<Pair>{
     }
 }
 
-class TreeNode{
-    int l ;
-    int r;
-    int v;
-    public TreeNode(int v,int l , int r){
-        this.l=l;
-        this.r=r;
-        this.v=v;
-    }
-}
+//class TreeNode{
+//    int l ;
+//    int r;
+//    int v;
+//    public TreeNode(int v,int l , int r){
+//        this.l=l;
+//        this.r=r;
+//        this.v=v;
+//    }
+//}

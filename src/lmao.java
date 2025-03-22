@@ -16,4 +16,5 @@ public class lmao {
         }
         System.out.println(cnt);
     }
+
 }
