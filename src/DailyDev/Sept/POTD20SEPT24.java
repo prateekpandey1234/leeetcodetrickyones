@@ -1,6 +1,9 @@
 package DailyDev.Sept;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.PriorityQueue;
+import java.util.TreeMap;
 
 public class POTD20SEPT24 {
     //first way is using of KMP algo , i thought and partially implemented it but this is full one
@@ -124,5 +127,57 @@ public class POTD20SEPT24 {
                 return res == Integer.MAX_VALUE ? -1 : res;
             }
         }
+    }
+    public int countCompleteSubarrays(int[] nums) {
+        HashMap<Integer,Integer> map = new HashMap<>();
+        for(int i:nums)map.put(i,map.getOrDefault(i,0)+1);
+        HashMap<Integer,Integer> c = new HashMap<>();
+        int l=0,ans=0;
+        for(int r=0;r<nums.length;r++){
+            while(l<r && c.size()==map.size()){
+                ans+=nums.length-r;
+                c.put(nums[l],c.get(nums[l])-1);
+                if(c.get(nums[l])<=0)c.remove(nums[l]);
+                l++;
+            }
+            c.put(nums[l],c.getOrDefault(nums[l],0)+1);
+        }
+        return ans;
+    }
+    public long numberOfSubarrays(int[] nums) {
+        int[][] max = new int[nums.length][nums.length];
+        int[][] arr = new int[nums.length][2];
+        for(int i=0;i<nums.length;i++){
+            arr[i] = new int[]{nums[i],i};
+            int curr=nums[i];
+            for(int j=i;j<nums.length;j++){
+                curr=Math.max(curr,nums[j]);
+                max[i][j]=curr;
+            }
+        }
+        Arrays.sort(arr, (a,b)-> ((a[0]==b[0])?a[1]-b[1]:a[0]-b[0]));
+
+    }
+}
+
+
+class Solution {
+    int m = (int)(1e9)+7;
+    int[][] dp ;
+    int[][] d = new int[][]{{1,1},{2,0},{0,2},{2,1},{1,2}};
+    public int numTilings(int n) {
+        dp = new int[n][n];
+        for(int[] r:dp)Arrays.fill(r,-1);
+        return f(0,0,n);
+    }
+    public int f(int i , int j , int n){
+        if(i==n && j==n)return 1;
+        if(i>=n || j>=n)return 0;
+        if(dp[i][j]!=-1)return dp[i][j];
+        int curr=0;
+        for(int k=0;k<d.length;k++){
+            curr = (curr+(f(i+d[k][0],j+d[k][1],n)%m))%m;
+        }
+        return dp[i][j]=curr%m;
     }
 }

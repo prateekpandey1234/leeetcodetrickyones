@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class CodeForcesModule {
+public class CodeForcesmule {
     final static int p = 131;
 
 
@@ -122,8 +122,8 @@ public class CodeForcesModule {
         return res;
     }
 
-    //https://e--maxx-ru.translate.goog/algo/modular_factorial?_x_tr_sch=http&_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en-GB
-    long factmod (long n) {
+    //https://e--maxx-ru.translate.goog/algo/mular_factorial?_x_tr_sch=http&_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en-GB
+    long factm (long n) {
         int res = 1;
         while (n > 1) {
             res = (res * (((n/m) % 2==0) ? p-1 : 1)) % p;
@@ -133,8 +133,39 @@ public class CodeForcesModule {
         }
         return res % p;
     }
+    // we did this because we want our a to be the number which divides b with 0 remainder
+    // so we store raminder on b side and the number which divides on a side
+    // the order of number is irrespective beause reaminder will exchange on next turn when dividing by larger number
+    // 4%6 == 6,2 , 6%4 == 4,2, 13%41 = 41,13-> 41%13 = 13,2 , 41%13 = 13,2
     static long gcd(long a, long b) {
         return b == 0 ? a : gcd(b, a % b);
+    }
+
+    private int[] getFactorial(int num) {
+        int[] factorial = new int[num + 1];
+        factorial[0] = 1;
+        for (int i = 1; i <= num; i++) {
+            factorial[i] = (int) ((1L * factorial[i - 1] * i) % m);
+        }
+        return factorial;
+    }
+    private int[] getInverseFactorial(int num, int[] factorial) {
+        int[] invFactorial = new int[num + 1];
+        for (int i = 1; i <= num; i++) {
+            invFactorial[i] = (int) powm(factorial[i], m - 2) % m;
+        }
+        return invFactorial;
+    }
+    private long powm(long num, int pow) {
+        long result = 1;
+        while (pow >= 1) {
+            if (pow % 2 == 1) {
+                result = (result * num) % m;
+            }
+            pow /= 2;
+            num = (num * num) % m;
+        }
+        return result;
     }
 
 
@@ -168,3 +199,39 @@ class Pair implements Comparable<Pair>{
 //        this.v=v;
 //    }
 //}
+
+
+
+class Solution {
+    int[][] dp;
+    public int maximumsSplicedArray(int[] nums1, int[] nums2) {
+        dp = new int [nums1.length][3];
+        int ans=0;
+        ans=f(a,b,0,0,2);
+        for(int[] r: dp)Arrays.fill(r,0);
+        ans=Math.max(ans,f(a,b,0,1,2));
+        return ans;
+    }
+    public int f(int [] a , int [] b , int i , int j , int sw ){
+        if(i>=a.length)return 0;
+        if(dp[i][j]!=0)return dp[i][j];
+        HashMap<Integer,Integer> map=new HashMap<>();
+        map.keySet();
+        int max=0;
+        if(j==0){
+            max=a[i]+f(a,b,i+1,j,sw);
+            if(sw+j>0){
+                dp[i][2]=b[i]+f(a,b,i+1,1,-2);
+            }
+        }
+        else if(j==1){
+            max=b[i]+f(a,b,i+1,j,sw);
+            if(sw+j>0){
+                dp[i][2]=a[i]+f(a,b,i+1,0,-2);
+            }
+        }
+        dp[i][j]=max;
+        return Math.max(dp[i][j],dp[i][2]);
+    }
+}
+

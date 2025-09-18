@@ -25,7 +25,7 @@ public class Round892D {
                     st.nextToken();
                     arr[i][1]=Integer.parseInt(st.nextToken());
                 }
-                Arrays.sort(arr,((a, b)-> (a[0]-b[0])));
+                Arrays.sort(arr,((a, b)-> (a[0] -b[0])));
                 int q = Integer.parseInt(br.readLine());
                 List<int[]> gaps = new ArrayList<>();
                 //updating our intervals into much bigger range

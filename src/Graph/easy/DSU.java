@@ -1,10 +1,9 @@
 package Graph.easy;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
-    //class needed to create while solving questions
+//class needed to create while solving questions
     public     class DSU {
         public int[] parent;
         public int[] depth;
@@ -59,3 +58,32 @@ import java.util.List;
 //            }
 //        }
 
+
+class Solution {
+    int ans=0;
+    public int longestSubstring(String s, int k) {
+        int[] freq = new int[26];
+        f(s,freq,0,0,k);
+        return ans;
+    }
+    public boolean check(int[] freq, int k){
+        for(int i:freq){
+            if(i!=0 && i<k)return false;
+        }
+        return true;
+    }
+
+    public void f(String s, int[] freq, int i , int j , int  k){
+        if(i>j || j>=s.length())return;
+        freq[s.charAt(j)-'a']++;
+        if(check(freq,k)){
+            ans=Math.max(ans,j-i+1);
+            f(s,freq,i,j+1,k);
+        }
+        else {
+            f(s,freq,i,j+1,k);
+            for(int a=0;a<=i;a++)freq[s.charAt(a)-'a']--;
+            f(s,freq,j+1,j+1,k);
+        }
+    }
+}
