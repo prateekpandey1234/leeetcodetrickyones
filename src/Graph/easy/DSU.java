@@ -14,6 +14,12 @@ import java.util.*;
                 parent[i] = i;
                 depth[i]=0;
             }
+            // when using par[x] , dont use direct parent par[i] find the super parent first
+
+            for(int i=0;i<N;i++){
+                int root = find(i);// dont use parent[i] here as root
+                // do something with root ..
+            }
         }
         public int find(int x) {
             if (parent[x] != x) parent[x] = find(parent[x]);
@@ -33,6 +39,7 @@ import java.util.*;
             if(depth[r1]==depth[r2])depth[r1]++;
         }
     }
+
 
         // Union function to merge the components of two nodes
 //        private void union(int node1, int node2) {
@@ -59,31 +66,7 @@ import java.util.*;
 //        }
 
 
-class Solution {
-    int ans=0;
-    public int longestSubstring(String s, int k) {
-        int[] freq = new int[26];
-        f(s,freq,0,0,k);
-        return ans;
-    }
-    public boolean check(int[] freq, int k){
-        for(int i:freq){
-            if(i!=0 && i<k)return false;
-        }
-        return true;
-    }
 
-    public void f(String s, int[] freq, int i , int j , int  k){
-        if(i>j || j>=s.length())return;
-        freq[s.charAt(j)-'a']++;
-        if(check(freq,k)){
-            ans=Math.max(ans,j-i+1);
-            f(s,freq,i,j+1,k);
-        }
-        else {
-            f(s,freq,i,j+1,k);
-            for(int a=0;a<=i;a++)freq[s.charAt(a)-'a']--;
-            f(s,freq,j+1,j+1,k);
-        }
-    }
-}
+
+
+

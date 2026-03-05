@@ -1,6 +1,7 @@
 package Graph.easy;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.PriorityQueue;
 
 public class PrimAlgo {
@@ -37,5 +38,31 @@ public class PrimAlgo {
             }
             return sum;
         }
+    }
+
+    public int minCostConnectPoints(int[][] points) {
+        HashMap<Integer,Integer> map = new HashMap<>();
+        boolean[] vis  = new boolean[points.length];
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b)->Integer.compare(a[1],b[1]));
+        pq.add(new int[]{0,0});
+        int ans=0;
+        while(!pq.isEmpty()){
+            int[] curr = pq.poll();
+            int wt = curr[1],u = curr[0];
+            if(vis[u])continue;
+            vis[u] = true;
+            ans+=wt;
+            for(int i=0;i<points.length;i++){
+                if(!vis[i]){
+                    int dis = Math.abs(points[u][1]-points[i][1])+Math.abs(points[u][0]-points[i][0]);
+                    if(map.getOrDefault(i,Integer.MAX_VALUE)>dis){
+                        map.put(i,dis);
+                        pq.add(new int[]{i,dis});
+                    }
+
+                }
+            }
+        }
+        return ans;
     }
 }

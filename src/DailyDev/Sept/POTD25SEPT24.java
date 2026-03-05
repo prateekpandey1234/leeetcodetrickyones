@@ -1,5 +1,9 @@
 package DailyDev.Sept;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class POTD25SEPT24 {
     class TrieNode {
 
@@ -55,4 +59,88 @@ public class POTD25SEPT24 {
             return scores;
         }
     }
+}
+
+class Solution2 {
+    int[][] dir = new int[][]{{1,0},{0,1},{-1,0},{0,-1}};
+    public List<String> findWords(char[][] board, String[] words) {
+        Trie trie = new Trie();
+        dfs(board,trie,0,0,new StringBuilder());
+        List<String> arr = new ArrayList();
+        for(String s:words){
+            if(trie.search(s)){
+                arr.add(s);
+            }
+        }
+        return arr;
+    }
+
+
+    public void dfs(char[][] graph,Trie trie , int i , int j ,StringBuilder str ){
+        if(i<0 || j<0 || i>=graph.length || j>=graph[0].length){
+            trie.insert(str.toString());
+            return ;
+        }
+
+        for(int [] d:dir){
+            int x = d[1]+j;
+            int y = d[0]+i;
+            StringBuilder s = new StringBuilder(str);
+            if(x>-1 && y>-1 && y<graph.length && x<graph[0].length){
+                s.append(graph[y][x]);
+                dfs(graph,trie,y,x,s);
+            }
+         }
+
+    }
+
+    public int minScoreTriangulation(int[] nums) {
+        int[][] arr = new int[nums.length][2];
+        for(int i=0;i<nums.length;i++)arr[i]  = new int[]{nums[i],2};
+//        Arrays.sort(nums,(a, b) -> a[0] - b[0]);
+        int k = arr[0][1];
+        int j=0;
+        for(int i=1;i<nums.length;i++){
+            if(Math.abs(arr[0][1]-arr[i][1])>1){
+                j=arr[i][1];
+                break;
+            }
+        }
+        int sum=0;
+        for(int i=0;i<nums.length;i++){
+            if(i!=k && i!=j){
+                sum+= (nums[k]*nums[j]*nums[i]);
+            }
+        }
+        return sum;
+    }
+
+}
+
+
+class Trie{
+    Trie[] arr= new Trie[26];
+
+    public Trie(){
+    }
+
+    public void insert(String s){
+        Trie[] curr = this.arr;
+        for(int i=0;i<s.length();i++){
+            if(curr[s.charAt(i)-'a']==null){
+                curr[s.charAt(i)-'a'] = new Trie();
+            }
+            curr = curr[s.charAt(i)-'a'].arr;
+        }
+    }
+
+    public boolean search(String s){
+        Trie[] curr = this.arr;
+        for(int i=0;i<s.length();i++){
+            if(curr[s.charAt(i)-'a']==null)return false;
+        }
+        return true;
+    }
+
+
 }

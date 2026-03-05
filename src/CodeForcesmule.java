@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.*;
 import java.io.*;
 
@@ -19,42 +20,103 @@ public class CodeForcesmule {
     public static void main(String[] args) throws IOException {
         br = new BufferedReader(new InputStreamReader(System.in));
         out = new BufferedWriter(new OutputStreamWriter(System.out));
+        solve();
 
-        int t = Integer.parseInt(br.readLine());
-
-//        prime(upperBound);
-        while (t-- > 0) {
-        // n-sum(k^i)
-            solve();
-        }
+//        int t = Integer.parseInt(br.readLine());
+//
+////        prime(upperBound);
+//        while (t-- > 0) {
+//        // n-sum(k^i)
+//            solve();
+//        }
 
 
         out.flush();
     }
 
 
+    static long[] t;
+
     public static void solve() throws IOException {
+        // in
         st = new StringTokenizer(br.readLine());
+
         int n=Integer.parseInt(st.nextToken());
-        if(n<5){
-            System.out.println(-1);
+
+        int[] arr = new int[n];
+        int s=1;
+        while(s<2*n){
+            s = s<<1;
+        }
+        t= new long[s+1];
+        st = new StringTokenizer(br.readLine());
+        for(int i=0;i<arr.length;i++){
+            arr[i] = Integer.parseInt(st.nextToken());
+        }
+        int[] freqOfI = new int[n];
+        HashMap<Integer,Integer> map = new HashMap<>();
+        for(int i=0;i<n;i++){
+            map.put(arr[i],map.getOrDefault(arr[i],0)+1);
+            freqOfI[i] = map.get(arr[i]);
+        }
+        map  = new HashMap<>();
+        long ans=0;
+        for(int i=n-1;i>-1;i--){
+            map.put(arr[i],map.getOrDefault(arr[i],0)+1);
+            int leftCount = freqOfI[i];
+            if(leftCount>1){
+                ans+=query(0,0,n-1,1,leftCount-1);
+            }
+            update(map.get(arr[i]),1,0,0,n-1);
+        }
+
+        System.out.println(ans);
+
+    }
+
+    boolean isPrime(int n) {
+        if (n <= 1) return false; // 1 and numbers <= 0 are not prime
+        if (n <= 3) return true;  // 2 and 3 are prime
+        if (n % 2 == 0 || n % 3 == 0) return false; // divisible by 2 or 3
+        for (int i = 5; i * i <= n; i += 6) {
+            if (n % i == 0 || n % (i + 2) == 0) return false;
+        }
+        return true;
+    }
+
+    public static void update(int i , int val , int v , int l , int r){
+        if(l==r){
+            t[v]+=val;
             return;
         }
-        List<Integer> ans= new ArrayList<>();
-        ans.add(2);
-        ans.add(4);
-        ans.add(5);
-        ans.add(1);
-        ans.add(3);
-        int j=ans.size();
-        for(int i=6;i<=n;i++){
-            ans.add(j,i);
-            if(j==0)j=ans.size();
-            else j=0;
+        int  m = (l+r)/2;
+        if(i<=m){
+            update(i,val,v*2+1,l,m);
         }
-        for(int i:ans)System.out.print(i+" ");
-        System.out.println();
+        else{
+            update(i,val,v*2+2,m+1,r);
+        }
+        t[v] = t[v*2+1]+t[v*2+2];
     }
+
+    public static long query(int v , int tl , int tr , int l , int r){
+        if(l>r) return 0;
+        if(tl==l && tr==r) return t[v];
+        int tm = (tl+tr)/2;
+        return query(v*2+1,tl,tm,l,Math.min(tm,r))+query( v*2+2,tm+1,tr,Math.max(tm+1,l),r);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     // seive till root prime factor generation
@@ -152,7 +214,7 @@ public class CodeForcesmule {
     private int[] getInverseFactorial(int num, int[] factorial) {
         int[] invFactorial = new int[num + 1];
         for (int i = 1; i <= num; i++) {
-            invFactorial[i] = (int) powm(factorial[i], m - 2) % m;
+//            invFactorial[i] = (int) powm(factorial[i], m - 2) % m;
         }
         return invFactorial;
     }
@@ -168,26 +230,38 @@ public class CodeForcesmule {
         return result;
     }
 
+    public int twoCitySchedCost(int[][] costs) {
+        int[][] a = new int[costs.length/2][2], b = new int[costs.length/2][2];
+        for(int i=0;i<costs.length;i++){
+            a[i]  = new int[]{costs[i][0],i};
+            b[i]  = new int[]{costs[i][1],i};
+        }
+        Arrays.sort(a,((x,y)->Integer.compare(x[0],y[0])));
+        Arrays.sort(b,((x,y)->Integer.compare(x[0],y[0])));
+        int ans=0;
+        int i=0,j=0;
+        int[] pick  = new int[costs.length];
+        for(;i<costs.length/2 || j<costs.length/2;){
+            if(a[i][0]<=b[j][0] ){
+                if(pick[a[i][1]]==0) ans+=a[i][0];
+                pick[a[i][1]]=1;
+                i++;
+            }
+            else if(a[i][0]>b[j][0]  ){
+                if(pick[b[j][1]]==0)ans+=b[j][0];
+                pick[b[j][1]]=1;
+                j++;
+            }
+        }
+        return ans;
+    }
+
 
 }
 
 
 
-class Pair implements Comparable<Pair>{
 
-    long v;
-    int v2;
-    public Pair(long v, int v2  ){
-        this.v=v;
-
-        this.v2=v2;
-    }
-
-    @Override
-    public int compareTo(Pair o) {
-        return  Long.compare(this.v,o.v);
-    }
-}
 
 //class TreeNode{
 //    int l ;
@@ -202,36 +276,36 @@ class Pair implements Comparable<Pair>{
 
 
 
-class Solution {
-    int[][] dp;
-    public int maximumsSplicedArray(int[] nums1, int[] nums2) {
-        dp = new int [nums1.length][3];
-        int ans=0;
-        ans=f(a,b,0,0,2);
-        for(int[] r: dp)Arrays.fill(r,0);
-        ans=Math.max(ans,f(a,b,0,1,2));
-        return ans;
-    }
-    public int f(int [] a , int [] b , int i , int j , int sw ){
-        if(i>=a.length)return 0;
-        if(dp[i][j]!=0)return dp[i][j];
-        HashMap<Integer,Integer> map=new HashMap<>();
-        map.keySet();
-        int max=0;
-        if(j==0){
-            max=a[i]+f(a,b,i+1,j,sw);
-            if(sw+j>0){
-                dp[i][2]=b[i]+f(a,b,i+1,1,-2);
-            }
-        }
-        else if(j==1){
-            max=b[i]+f(a,b,i+1,j,sw);
-            if(sw+j>0){
-                dp[i][2]=a[i]+f(a,b,i+1,0,-2);
-            }
-        }
-        dp[i][j]=max;
-        return Math.max(dp[i][j],dp[i][2]);
-    }
-}
+//class Solution {
+//    int[][] dp;
+//    public int maximumsSplicedArray(int[] nums1, int[] nums2) {
+//        dp = new int [nums1.length][3];
+//        int ans=0;
+//        ans=f(a,b,0,0,2);
+//        for(int[] r: dp)Arrays.fill(r,0);
+//        ans=Math.max(ans,f(a,b,0,1,2));
+//        return ans;
+//    }
+//    public int f(int [] a , int [] b , int i , int j , int sw ){
+//        if(i>=a.length)return 0;
+//        if(dp[i][j]!=0)return dp[i][j];
+//        HashMap<Integer,Integer> map=new HashMap<>();
+//        map.keySet();
+//        int max=0;
+//        if(j==0){
+//            max=a[i]+f(a,b,i+1,j,sw);
+//            if(sw+j>0){
+//                dp[i][2]=b[i]+f(a,b,i+1,1,-2);
+//            }
+//        }
+//        else if(j==1){
+//            max=b[i]+f(a,b,i+1,j,sw);
+//            if(sw+j>0){
+//                dp[i][2]=a[i]+f(a,b,i+1,0,-2);
+//            }
+//        }
+//        dp[i][j]=max;
+//        return Math.max(dp[i][j],dp[i][2]);
+//    }
+//}
 

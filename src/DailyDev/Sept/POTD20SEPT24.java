@@ -144,6 +144,8 @@ public class POTD20SEPT24 {
         }
         return ans;
     }
+
+    // a-b = k , a-k = b, 
     public long numberOfSubarrays(int[] nums) {
         int[][] max = new int[nums.length][nums.length];
         int[][] arr = new int[nums.length][2];
@@ -156,7 +158,7 @@ public class POTD20SEPT24 {
             }
         }
         Arrays.sort(arr, (a,b)-> ((a[0]==b[0])?a[1]-b[1]:a[0]-b[0]));
-
+return 0l;
     }
 }
 
